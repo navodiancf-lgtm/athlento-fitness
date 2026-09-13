@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@base-ui/react": "latest",
     "@fontsource-variable/manrope": "^5.1.0",
     "@fontsource-variable/outfit": "^5.1.0",
     "@fontsource/ibm-plex-mono": "^5.1.0",
