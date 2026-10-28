@@ -1,6 +1,7 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { C } from "../brand";
+import { FloatingShapes, GradientBlobs, KineticText } from "../motion";
 import { DotGrid, Headline, Page, useSpring } from "../ui";
 
 const WORDS = ["Elections?", "Crypto?", "Sports?", "The Fed?"];
@@ -22,7 +23,7 @@ const Word: React.FC<{ text: string; at: number }> = ({ text, at }) => {
         color: C.ink,
       }}
     >
-      {text}
+      <KineticText text={text} delay={at} stagger={1} />
     </div>
   );
 };
@@ -31,16 +32,25 @@ export const Hook: React.FC = () => {
   const frame = useCurrentFrame();
   return (
     <Page>
+      <GradientBlobs />
       <DotGrid />
+      <FloatingShapes />
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
         {frame < QUESTION_AT ? (
-          WORDS.map((w, i) => <Word key={w} text={w} at={WORD_START + i * WORD_LEN} />)
+          WORDS.map((w, i) => (
+            <Word key={w} text={w} at={WORD_START + i * WORD_LEN} />
+          ))
         ) : (
           <Headline
             align="center"
             size={150}
             delay={QUESTION_AT}
-            lines={["What happens", <span key="n" style={{ color: C.blue }}>next?</span>]}
+            lines={[
+              "What happens",
+              <span key="n" style={{ color: C.blue }}>
+                next?
+              </span>,
+            ]}
           />
         )}
       </AbsoluteFill>

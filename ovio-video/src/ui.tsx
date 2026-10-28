@@ -2,15 +2,30 @@ import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, FONT } from "./brand";
 
-export const useSpring = (delay: number, damping = 14, durationInFrames?: number) => {
+export const useSpring = (
+  delay: number,
+  damping = 14,
+  durationInFrames?: number,
+) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  return spring({ frame: frame - delay, fps, config: { damping }, durationInFrames });
+  return spring({
+    frame: frame - delay,
+    fps,
+    config: { damping },
+    durationInFrames,
+  });
 };
 
-export const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+export const clamp = {
+  extrapolateLeft: "clamp",
+  extrapolateRight: "clamp",
+} as const;
 
-export const Page: React.FC<{ bg?: string; children: React.ReactNode }> = ({ bg = C.bg, children }) => (
+export const Page: React.FC<{ bg?: string; children: React.ReactNode }> = ({
+  bg = C.bg,
+  children,
+}) => (
   <div
     style={{
       position: "absolute",
@@ -25,7 +40,9 @@ export const Page: React.FC<{ bg?: string; children: React.ReactNode }> = ({ bg 
   </div>
 );
 
-export const DotGrid: React.FC<{ color?: string }> = ({ color = "#D9DFEA" }) => {
+export const DotGrid: React.FC<{ color?: string }> = ({
+  color = "#D9DFEA",
+}) => {
   const frame = useCurrentFrame();
   return (
     <div
@@ -41,24 +58,39 @@ export const DotGrid: React.FC<{ color?: string }> = ({ color = "#D9DFEA" }) => 
   );
 };
 
-/** Lowercase wordmark in the spirit of the ovio logo. */
-export const Logo: React.FC<{ size: number; color?: string }> = ({ size, color = C.blue }) => (
-  <div
-    style={{
-      fontFamily: FONT,
-      fontWeight: 800,
-      fontSize: size,
-      letterSpacing: -size * 0.04,
-      color,
-      lineHeight: 1,
-      transform: "skewX(-6deg)",
-    }}
-  >
-    ovio
-  </div>
-);
+/** Lowercase wordmark in the spirit of the ovio logo. `shine` (0-1) sweeps a highlight across the letters. */
+export const Logo: React.FC<{
+  size: number;
+  color?: string;
+  shine?: number;
+  shineColor?: string;
+}> = ({ size, color = C.blue, shine = 0, shineColor = "#FFFFFF" }) => {
+  const x = -30 + shine * 160;
+  return (
+    <div
+      style={{
+        fontFamily: FONT,
+        fontWeight: 800,
+        fontSize: size,
+        letterSpacing: -size * 0.04,
+        lineHeight: 1,
+        transform: "skewX(-6deg)",
+        color: "transparent",
+        backgroundImage: `linear-gradient(105deg, ${color} ${x - 14}%, ${shineColor} ${x}%, ${color} ${x + 14}%)`,
+        WebkitBackgroundClip: "text",
+        backgroundClip: "text",
+        paddingRight: size * 0.06,
+      }}
+    >
+      ovio
+    </div>
+  );
+};
 
-export const Card: React.FC<{ style?: React.CSSProperties; children: React.ReactNode }> = ({ style, children }) => (
+export const Card: React.FC<{
+  style?: React.CSSProperties;
+  children: React.ReactNode;
+}> = ({ style, children }) => (
   <div
     style={{
       background: C.white,
@@ -72,11 +104,11 @@ export const Card: React.FC<{ style?: React.CSSProperties; children: React.React
   </div>
 );
 
-export const Pill: React.FC<{ kind: "yes" | "no"; active?: number; children: React.ReactNode }> = ({
-  kind,
-  active = 0,
-  children,
-}) => {
+export const Pill: React.FC<{
+  kind: "yes" | "no";
+  active?: number;
+  children: React.ReactNode;
+}> = ({ kind, active = 0, children }) => {
   const fg = kind === "yes" ? C.yes : C.no;
   const bg = kind === "yes" ? C.yesBg : C.noBg;
   return (
@@ -108,7 +140,11 @@ export const Headline: React.FC<{
   return (
     <div style={{ textAlign: align }}>
       {lines.map((line, i) => {
-        const p = spring({ frame: frame - delay - i * 6, fps, config: { damping: 16 } });
+        const p = spring({
+          frame: frame - delay - i * 6,
+          fps,
+          config: { damping: 16 },
+        });
         return (
           <div key={i} style={{ overflow: "hidden", paddingBottom: 8 }}>
             <div
@@ -130,7 +166,11 @@ export const Headline: React.FC<{
   );
 };
 
-export const Cursor: React.FC<{ x: number; y: number; press?: number }> = ({ x, y, press = 0 }) => (
+export const Cursor: React.FC<{ x: number; y: number; press?: number }> = ({
+  x,
+  y,
+  press = 0,
+}) => (
   <svg
     width={56}
     height={56}
@@ -145,9 +185,17 @@ export const Cursor: React.FC<{ x: number; y: number; press?: number }> = ({ x, 
       zIndex: 10,
     }}
   >
-    <path d="M3 2 L3 19 L8 14.5 L11.5 22 L14.5 20.6 L11 13.3 L17.5 13.3 Z" fill={C.ink} stroke="#fff" strokeWidth={1.4} />
+    <path
+      d="M3 2 L3 19 L8 14.5 L11.5 22 L14.5 20.6 L11 13.3 L17.5 13.3 Z"
+      fill={C.ink}
+      stroke="#fff"
+      strokeWidth={1.4}
+    />
   </svg>
 );
 
 export const lerp = (frame: number, input: number[], output: number[]) =>
-  interpolate(frame, input, output, { ...clamp, easing: (t) => 1 - Math.pow(1 - t, 3) });
+  interpolate(frame, input, output, {
+    ...clamp,
+    easing: (t) => 1 - Math.pow(1 - t, 3),
+  });

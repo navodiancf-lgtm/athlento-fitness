@@ -27,4 +27,4 @@ npm run dev                     # Remotion Studio
 npx remotion render OvioPromo out/ovio-promo.mp4 --crf=18
 ```
 
-Brand colors and scene timings live in `src/brand.ts`.
+Brand colors and scene timings live in `src/brand.ts`. Motion graphics layers (gradient blobs, floating shapes, kinetic text, logo shine, particle bursts, ripples, 3D card tilt, flash) live in `src/motion.tsx`.

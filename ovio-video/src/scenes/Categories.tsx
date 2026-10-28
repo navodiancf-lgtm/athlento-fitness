@@ -1,12 +1,29 @@
 import React from "react";
-import { AbsoluteFill, random, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  AbsoluteFill,
+  random,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { C } from "../brand";
+import { GradientBlobs } from "../motion";
 import { DotGrid, Headline, Page } from "../ui";
 
 // Category tabs from the ovio.live nav
 const CHIPS = [
-  "Politics", "World", "Sports", "Crypto", "Esports", "Finance",
-  "Geopolitics", "Tech", "Culture", "Economy", "Weather", "Elections",
+  "Politics",
+  "World",
+  "Sports",
+  "Crypto",
+  "Esports",
+  "Finance",
+  "Geopolitics",
+  "Tech",
+  "Culture",
+  "Economy",
+  "Weather",
+  "Elections",
 ];
 export const CHIP_START = 4;
 export const CHIP_EVERY = 3;
@@ -16,11 +33,16 @@ export const Categories: React.FC = () => {
   const { fps } = useVideoConfig();
   return (
     <Page>
+      <GradientBlobs opacity={0.8} />
       <DotGrid />
       {CHIPS.map((chip, i) => {
         const col = i % 4;
         const row = Math.floor(i / 4);
-        const s = spring({ frame: frame - CHIP_START - i * CHIP_EVERY, fps, config: { damping: 12 } });
+        const s = spring({
+          frame: frame - CHIP_START - i * CHIP_EVERY,
+          fps,
+          config: { damping: 12 },
+        });
         const drift = (random(`chip-${i}`) - 0.5) * 60;
         const highlight = i % 5 === 1;
         return (
@@ -51,7 +73,11 @@ export const Categories: React.FC = () => {
           align="center"
           size={120}
           delay={18}
-          lines={[<span key="e">Every market that <span style={{ color: C.blue }}>matters.</span></span>]}
+          lines={[
+            <span key="e">
+              Every market that <span style={{ color: C.blue }}>matters.</span>
+            </span>,
+          ]}
         />
       </AbsoluteFill>
     </Page>

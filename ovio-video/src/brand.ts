@@ -3,9 +3,21 @@ import { staticFile } from "remotion";
 
 export const FONT = "Inter Display";
 
-loadFont({ family: FONT, url: staticFile("fonts/InterDisplay-Medium.otf"), weight: "500" });
-loadFont({ family: FONT, url: staticFile("fonts/InterDisplay-Bold.otf"), weight: "700" });
-loadFont({ family: FONT, url: staticFile("fonts/InterDisplay-ExtraBold.otf"), weight: "800" });
+loadFont({
+  family: FONT,
+  url: staticFile("fonts/InterDisplay-Medium.otf"),
+  weight: "500",
+});
+loadFont({
+  family: FONT,
+  url: staticFile("fonts/InterDisplay-Bold.otf"),
+  weight: "700",
+});
+loadFont({
+  family: FONT,
+  url: staticFile("fonts/InterDisplay-ExtraBold.otf"),
+  weight: "800",
+});
 
 // Sampled from ovio.live
 export const C = {
